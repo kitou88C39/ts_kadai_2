@@ -22,7 +22,6 @@ class ObjectWrapper {
    * @param val オブジェクトの値
    */
   //変更前set(key, val): boolean {}
-
   set(key: any, val: string): boolean {
     if (this._obj[key] !== undefined) {
       console.log(typeof this._obj);
