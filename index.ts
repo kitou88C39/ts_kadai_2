@@ -1,12 +1,12 @@
 class ObjectWrapper {
-  private _obj: 'Object';
+  private _obj;
 
   /***
    * 引数のオブジェクトのコピーを this._objに設定
    */
   //変更前　constructor(_obj: Object) {}
   constructor(_obj: Object) {
-    this._obj = 'Object';
+    this._obj = _obj;
   }
   /**
    * this._objのコピーを返却
@@ -22,7 +22,7 @@ class ObjectWrapper {
    * @param val オブジェクトの値
    */
   //変更前set(key, val): boolean {}
-  set(key: any, val: string): boolean {
+  set(key: string, val: string): boolean {
     if (this._obj[key] !== undefined) {
       console.log(typeof this._obj);
       console.log(typeof key);
@@ -38,7 +38,7 @@ class ObjectWrapper {
    * @param key オブジェクトのキー
    */
   //変更前get(key) {}
-  get(key: any) {
+  get(key: string) {
     return this._obj[key];
   }
   /**
