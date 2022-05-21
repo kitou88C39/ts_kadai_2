@@ -1,13 +1,14 @@
 class ObjectWrapper {
-  private _obj;
+  private _obj: any;
 
   /***
    * 引数のオブジェクトのコピーを this._objに設定
    */
   //変更前　constructor(_obj: Object) {}
   constructor(_obj: Object) {
-    this._obj = _obj;
+    this._obj(_obj);
   }
+
   /**
    * this._objのコピーを返却
    * @return Object
@@ -24,9 +25,7 @@ class ObjectWrapper {
   //変更前set(key, val): boolean {}
   set(key: string, val: string): boolean {
     if (this._obj[key] !== undefined) {
-      console.log(typeof this._obj);
-      console.log(typeof key);
-      this._obj[key] = val;
+      this._obj[key](val);
       return true;
     }
     return false;
@@ -39,17 +38,18 @@ class ObjectWrapper {
    */
   //変更前get(key) {}
   get(key: string) {
-    return this._obj[key];
+    return this._obj;
   }
+
   /**
    * 指定した値を持つkeyの配列を返却。該当のものがなければ空の配列を返却。
    */
   //findKeys(val: unknown) {}
-  findKeys(val: unknown): unknown[] {
-    return keys;
+  findKeys(val: unknown): string[] {
+    return this._obj(val);
   }
 }
-
+const objecting = new ObjectWrapper('Objecting');
 /**
  * check script
  * 完成したら、以下のスクリプトがすべてOKになる。
