@@ -1,12 +1,22 @@
+// interface obj1 {
+//   [key: string]: string;
+// }
+
+type obj1 = {
+  a: string;
+  b: string;
+  [key: string]: string;
+};
+
 class ObjectWrapper {
-  private _obj: any;
+  private _obj: obj1;
 
   /***
    * 引数のオブジェクトのコピーを this._objに設定
    */
   //変更前　constructor(_obj: Object) {}
-  constructor(_obj: Object) {
-    this._obj(_obj);
+  constructor(_obj: obj1) {
+    this._obj = { ..._obj };
   }
 
   /**
@@ -15,7 +25,7 @@ class ObjectWrapper {
    */
   //変更前　get obj() {}
   get obj() {
-    return this._obj;
+    return { ...this._obj };
   }
   /**
    * this._obj[key] に valを設定。keyがthis._objに存在しない場合、falseを返却
@@ -25,7 +35,7 @@ class ObjectWrapper {
   //変更前set(key, val): boolean {}
   set(key: string, val: string): boolean {
     if (this._obj[key] !== undefined) {
-      this._obj[key](val);
+      this._obj[key] = val;
       return true;
     }
     return false;
@@ -45,11 +55,11 @@ class ObjectWrapper {
    * 指定した値を持つkeyの配列を返却。該当のものがなければ空の配列を返却。
    */
   //findKeys(val: unknown) {}
-  findKeys(val: unknown): string[] {
-    return this._obj(val);
+  findKeys(val: unknown): string {
+    return keys;
   }
 }
-const objecting = new ObjectWrapper('Objecting');
+
 /**
  * check script
  * 完成したら、以下のスクリプトがすべてOKになる。
