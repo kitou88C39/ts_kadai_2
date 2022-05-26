@@ -1,12 +1,6 @@
-// interface obj1 {
-//   [key: string]: string;
-// }
-
-type obj1 = {
-  a: string;
-  b: string;
+interface obj1 {
   [key: string]: string;
-};
+}
 
 class ObjectWrapper {
   private _obj: obj1;
@@ -48,7 +42,7 @@ class ObjectWrapper {
    */
   //変更前get(key) {}
   get(key: string) {
-    return this._obj;
+    return this._obj[key];
   }
 
   /**
