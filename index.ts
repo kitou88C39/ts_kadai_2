@@ -1,15 +1,17 @@
-interface obj1 {
-  [key: string]: string;
-}
+type Obj01 = {
+  a: string;
+  b: string;
+};
+type K = keyof { a: string; b: string };
 
-class ObjectWrapper {
-  private _obj: obj1;
+class ObjectWrapper<T extends Obj01> {
+  private _obj: T;
 
   /***
    * 引数のオブジェクトのコピーを this._objに設定
    */
   //変更前　constructor(_obj: Object) {}
-  constructor(_obj: obj1) {
+  constructor(_obj: T) {
     this._obj = { ..._obj };
   }
 
@@ -27,7 +29,7 @@ class ObjectWrapper {
    * @param val オブジェクトの値
    */
   //変更前set(key, val): boolean {}
-  set(key: string, val: string): boolean {
+  set(key: K, val: string): boolean {
     if (this._obj[key] !== undefined) {
       this._obj[key] = val;
       return true;
@@ -41,7 +43,7 @@ class ObjectWrapper {
    * @param key オブジェクトのキー
    */
   //変更前get(key) {}
-  get(key: string) {
+  get(key: K) {
     return this._obj[key];
   }
 
@@ -49,7 +51,7 @@ class ObjectWrapper {
    * 指定した値を持つkeyの配列を返却。該当のものがなければ空の配列を返却。
    */
   //findKeys(val: unknown) {}
-  findKeys(val: unknown): string {
+  findKeys(val: unknown): string[] {
     return keys;
   }
 }
