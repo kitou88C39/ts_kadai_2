@@ -1,40 +1,33 @@
-type Obj01 = {
-  a: string;
-  b: string;
-};
-type K = keyof { a: string; b: string };
-
-class ObjectWrapper<T extends Obj01> {
-  private _obj: T;
+class ObjectWrapper {
+  private _obj: Record<string, string>;
 
   /***
    * 引数のオブジェクトのコピーを this._objに設定
    */
-  //変更前　constructor(_obj: Object) {}
-  constructor(_obj: T) {
-    this._obj = { ..._obj };
+  constructor(_obj: Record<string, string>) {
+    this._obj = _obj;
   }
 
   /**
    * this._objのコピーを返却
    * @return Object
    */
-  //変更前　get obj() {}
   get obj() {
     return { ...this._obj };
   }
+
   /**
    * this._obj[key] に valを設定。keyがthis._objに存在しない場合、falseを返却
    * @param key オブジェクトのキー
    * @param val オブジェクトの値
    */
-  //変更前set(key, val): boolean {}
-  set(key: K, val: string): boolean {
-    if (this._obj[key] !== undefined) {
+  set(key: string, val: string): boolean {
+    if (this._obj[key]) {
       this._obj[key] = val;
       return true;
+    } else {
+      return false;
     }
-    return false;
   }
 
   /**
@@ -42,17 +35,25 @@ class ObjectWrapper<T extends Obj01> {
    * 指定のキーが存在しない場合 undefinedを返却
    * @param key オブジェクトのキー
    */
-  //変更前get(key) {}
-  get(key: K) {
-    return this._obj[key];
+  get(key: string) {
+    return { ...this._obj }[key];
   }
 
   /**
    * 指定した値を持つkeyの配列を返却。該当のものがなければ空の配列を返却。
    */
-  //findKeys(val: unknown) {}
-  findKeys(val: unknown): string[] {
-    return keys;
+  findKeys(val?: string) {
+    if (typeof val === 'undefined') {
+      return [];
+    } else {
+      return Object.entries(this._obj)
+        .filter(([_k, v]) => {
+          return val === v;
+        })
+        .map(([k, _v]) => {
+          return k;
+        });
+    }
   }
 }
 
@@ -61,7 +62,6 @@ class ObjectWrapper<T extends Obj01> {
  * 完成したら、以下のスクリプトがすべてOKになる。
  */
 const obj1 = { a: '01', b: '02' };
-
 const wrappedObj1 = new ObjectWrapper(obj1);
 
 if (wrappedObj1.obj.a === '01') {
